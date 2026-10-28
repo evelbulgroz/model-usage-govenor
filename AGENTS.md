@@ -24,7 +24,10 @@ Standalone package providing the Model Usage Governor and provider adapters (`pa
 
 - [`./README.md`](./README.md) — Package layout, credential/local-policy configuration, public API, and development/testing commands
 - [`./ARCHITECTURE.md`](./ARCHITECTURE.md) — Architectural intent, rationale, core guarantees, and two-phase execution lifecycle
+- [`./docs/handbook/governance-philosophy.md`](./docs/handbook/governance-philosophy.md) — Core governance philosophy, principles, and trade-offs
+- [`./docs/handbook/development-guide.md`](./docs/handbook/development-guide.md) — Pure logic separation, 4 shadow paths, and offline testing
 - [`./PROVIDER-CAPABILITIES.md`](./PROVIDER-CAPABILITIES.md) — Provider route capabilities and metered pricing evidence
+- [`.agents/skills/`](./.agents/skills/README.md) — Interactive pairing skills (`bugfix-workflow`, `test-writing-workflow`, `documentation-workflow`)
 
 ### Module Reference Guides (Progressive Disclosure)
 

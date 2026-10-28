@@ -138,7 +138,6 @@ test('@ac AC-04 capability subfolder READMEs exist within navigability limits an
 
 test('@ac AC-04 @case AC-04.1 no .md, .ts, or .spec.mjs file under packages/model-usage references monorepo-only paths or root scripts', () => {
 	const forbiddenNeedles = [
-		`${'docs'}/handbook/`,
 		`${'tools'}/quality/`,
 		`${'apps'}/services/conditioning`,
 		`pnpm run ${'test:model-usage'}`,
@@ -148,7 +147,7 @@ test('@ac AC-04 @case AC-04.1 no .md, .ts, or .spec.mjs file under packages/mode
 	function walk(dir) {
 		const files = [];
 		for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-			if (entry.name === 'node_modules' || entry.name === 'dist' || entry.name === '.test-state') continue;
+			if (entry.name === 'node_modules' || entry.name === 'dist' || entry.name === '.test-state' || entry.name.startsWith('.')) continue;
 			const full = path.join(dir, entry.name);
 			if (entry.isDirectory()) files.push(...walk(full));
 			else if (

@@ -6,6 +6,8 @@ The governor is the exclusive gateway for all repository-owned LLM calls—enfor
 
 **Canonical references:**
 - **Architecture, rationale & core guarantees:** [`ARCHITECTURE.md`](./ARCHITECTURE.md)
+- **Governance philosophy & principles:** [`docs/handbook/governance-philosophy.md`](./docs/handbook/governance-philosophy.md)
+- **Development & testing guidelines:** [`docs/handbook/development-guide.md`](./docs/handbook/development-guide.md)
 - **Package agent operating contract:** [`AGENTS.md`](./AGENTS.md)
 - **Provider route capabilities & pricing evidence:** [`PROVIDER-CAPABILITIES.md`](./PROVIDER-CAPABILITIES.md)
 - **Bundled default policy:** [`policy/default-policy.json`](./policy/default-policy.json)

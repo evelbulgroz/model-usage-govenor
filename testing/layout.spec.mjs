@@ -11,6 +11,7 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const ALLOWED_CHILDREN = new Set([
 	'.git',
 	'.gitignore',
+	'.agents',
 	'pnpm-lock.yaml',
 	'AGENTS.md',
 	'ARCHITECTURE.md',
@@ -20,6 +21,7 @@ const ALLOWED_CHILDREN = new Set([
 	'tsconfig.json',
 	'tsconfig.build.json',
 	'dist',
+	'docs',
 	'node_modules',
 	'.turbo',
 	'.test-state',
