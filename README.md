@@ -1,4 +1,4 @@
-# Model Usage Governor (`packages/model-usage/`)
+# Model Usage Governor (`@evelbulgroz/model-usage-govenor`)
 
 **Living home** for the Model Usage Governor (`@evelbulgroz/model-usage-govenor`), a standalone library consumed by host applications, agent frameworks, and review CLIs (where host identity is bound via `repositoryId` in `.agents/sdlc-host.json` and live state defaults to `tools/.model-usage` or `MODEL_USAGE_STATE_DIR`).
 
@@ -29,7 +29,7 @@ Detailed subsystem documentation and invariants live in co-located module README
 | `testing/` | Shared test fixtures (`*-test-support.mjs`) and package layout, navigability, and living-documentation gates | [`testing/README.md`](./testing/README.md) |
 
 ```text
-packages/model-usage/
+model-usage-govenor/
 ├── governor.ts                   # Root package entrypoint barrel re-exporting governor/governor.ts
 ├── atomic-file-state.ts          # Shared withLockSync and durableReplaceSync primitives
 ├── sanitize-failure-text.ts      # Shared failure-text sanitization and snippet extraction
@@ -52,7 +52,7 @@ packages/model-usage/
 └── README.md
 ```
 
-`governor-*.ts` and `ledger-*.ts` are internal parts of the governor that only `governor.ts` and `ledger.ts` import. Retry, failover, and accounting stay in the governor. `ledger-envelope-validation.ts` may import `ledger-attempt-validation.ts`. Production code outside this package imports only the subpath exports declared in `packages/model-usage/package.json`.
+`governor-*.ts` and `ledger-*.ts` are internal parts of the governor that only `governor.ts` and `ledger.ts` import. Retry, failover, and accounting stay in the governor. `ledger-envelope-validation.ts` may import `ledger-attempt-validation.ts`. Production code outside this package imports only the subpath exports declared in `package.json`.
 
 **State & Policy Files:**
 - `.agents/model-usage-policy.json` — Committed maximum engine policy and route catalog (bounded above by `BUILTIN_SAFETY`).
@@ -71,7 +71,11 @@ packages/model-usage/
 When paired with host agent runners or review CLIs, the governor operates in a **hybrid deployment model**:
 
 1. **Single Per-Machine Governor & Shared Ledger State:** All host repositories driven by the machine's agent and review CLIs execute against the single machine installation of `@evelbulgroz/model-usage-govenor` and share its `tools/.model-usage/` state directory (`.instance.lock`, `provider-circuit.json`, and `runs/<run-id>.json`). This enforces unified cross-repository concurrency limits, provider cooldown circuits, and instance lifetime spend caps without adding governor dependencies to target repositories.
-2. **3-Tier Monotonic (Lower-Only) Policy Resolution (`loadPolicy` in `packages/model-usage/policy/policy.ts`):**
+   - **Export `MODEL_USAGE_PATH` for zero-dependency host scripts & shims:** When a host repository invokes governor scripts (`scripts/audit-pricing.ts`), policy loaders (`policy/policy.ts`), or shared primitives (`atomic-file-state.ts`, `sanitize-failure-text.ts`) directly from a local checkout without installing `@evelbulgroz/model-usage-govenor` into the host's `node_modules`, export `MODEL_USAGE_PATH` in your shell login/environment profile (`~/.profile`, `~/.bashrc`, or `~/.zshenv` so both interactive shells and non-interactive subshells inherit it):
+     ```bash
+     export MODEL_USAGE_PATH="/path/to/model-usage-govenor"
+     ```
+2. **3-Tier Monotonic (Lower-Only) Policy Resolution (`loadPolicy` in `policy/policy.ts`):**
    - **Tier 1 — Committed Engine Ceiling:** `.agents/model-usage-policy.json` in the engine checkout (bounded above by `BUILTIN_SAFETY`).
    - **Tier 2 — Per-Machine Override (optional):** `${XDG_CONFIG_HOME:-~/.config}/model-usage/local-policy.json` (or `MODEL_USAGE_MACHINE_LOCAL_POLICY_PATH`), applying workstation-wide spend caps or route exclusions across all repositories.
    - **Tier 3 — Per-Project / Host-Repo Override (optional):** `<host-root>/.agent-sdlc/local-policy.json` or `<host-root>/tools/.model-usage/local-policy.json` (or `MODEL_USAGE_DEFAULT_LOCAL_POLICY_PATH` / `localPolicyPath`), tightening limits for a specific host project.
@@ -96,7 +100,7 @@ When paired with host agent runners or review CLIs, the governor operates in a *
    ```
    *(Each tier merges monotonically via `resolvePolicy`: overrides may only lower numerical limits, shorten timeouts, or disable routes; any attempt to raise a parent tier's ceiling or re-enable a disabled route throws `ERR_LIMIT_ESCALATION_FORBIDDEN`.)*
 
-### Package Subpath Exports (`packages/model-usage/package.json`)
+### Package Subpath Exports (`package.json`)
 
 | Specifier | Target | Primary Exports |
 |---|---|---|
@@ -168,7 +172,7 @@ See [`governor/README.md`](./governor/README.md) for `GovernorResult` fields and
 ### Develop
 
 - **TypeScript & build:** Sources run directly on Node.js `>= 22.18.0` (`node -p process.features.typescript` printing `strip`) and emit precompiled `.js` + `.d.ts` to `dist/` via `tsconfig.build.json` (`rewriteRelativeImportExtensions: true`) for `node_modules` execution. Use erasable TypeScript syntax only (`erasableSyntaxOnly`, `verbatimModuleSyntax` in [`tsconfig.json`](./tsconfig.json)) and explicit `.ts` extensions on relative imports.
-- **Package boundaries & navigability ceilings:** Keep all in-scope `.ts` and `.mjs` files within `<= 500` lines and `<= 20,480` bytes (`packages/model-usage/testing/navigability.spec.mjs`).
+- **Package boundaries & navigability ceilings:** Keep all in-scope `.ts` and `.mjs` files within `<= 500` lines and `<= 20,480` bytes (`testing/navigability.spec.mjs`).
 
 ```bash
 # Build dist/ (.js + .d.ts + dist/policy/default-policy.json)
