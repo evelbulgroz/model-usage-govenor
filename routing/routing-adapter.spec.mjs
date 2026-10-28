@@ -3,6 +3,7 @@ import test from 'node:test';
 import { ModelUsageError } from '../policy/errors.ts';
 import {
 	effectiveProfile as resolveEffectiveProfile,
+	resolvePolicy,
 	validateOperationRequest,
 	validatePolicy,
 } from '../policy/policy.ts';
@@ -160,6 +161,33 @@ test('AC-03: Preferred routes take priority under healthy runway', () => {
 	assert.equal(decision.routes[0].id, 'xai-grok-conservative');
 	assert.equal(decision.pressureActive, false);
 	assert.equal(decision.effectiveStrategy, 'min-cost');
+});
+
+test('selectRoutes honors swapped priority order from local policy under balanced strategy', () => {
+	const policy = resolvePolicy(readCommittedPolicy(), {
+		profiles: {
+			'agent-sdlc-default': {
+				routeIds: [
+					'fake-governed',
+					'xai-grok-quality',
+					'openai-compatible-quality',
+					'anthropic-claude-quality',
+					'google-gemini-quality',
+				],
+			},
+		},
+	});
+	const profile = resolveEffectiveProfile(policy, validateOperationRequest(baseRequest()));
+	const decision = selectRoutes(policy, profile);
+	assert.deepEqual(
+		decision.routes.map((route) => route.id),
+		[
+			'xai-grok-quality',
+			'openai-compatible-quality',
+			'anthropic-claude-quality',
+			'google-gemini-quality',
+		],
+	);
 });
 
 test('AC-04: Min-cost strategy sorts candidate routes by estimated reservation price', () => {

@@ -123,3 +123,26 @@ test('resolvePolicy leaves the committed policy unchanged when local input is om
 	const committed = readCommittedPolicy();
 	assert.deepEqual(resolvePolicy(committed, undefined), validatePolicy(committed));
 });
+
+test('resolvePolicy reorders routes and unoverridden profile routeIds when local routes swap priority order', () => {
+	const committed = readCommittedPolicy();
+	const resolved = resolvePolicy(committed, {
+		routes: [{ id: 'xai-grok-quality' }, { id: 'openai-compatible-quality' }],
+	});
+	const qualityOrder = resolved.routes
+		.filter((r) => r.qualityTier === 3)
+		.map((r) => r.id);
+	assert.deepEqual(qualityOrder, [
+		'xai-grok-quality',
+		'openai-compatible-quality',
+		'anthropic-claude-quality',
+		'google-gemini-quality',
+	]);
+	assert.deepEqual(resolved.profiles['agent-sdlc-default'].routeIds, [
+		'fake-governed',
+		'xai-grok-quality',
+		'openai-compatible-quality',
+		'anthropic-claude-quality',
+		'google-gemini-quality',
+	]);
+});

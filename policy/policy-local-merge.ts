@@ -77,6 +77,7 @@ export function mergeLocalPolicy(
 			result.instance[k] = ensureLower(value, committed.instance[k], `instance.${key}`);
 		}
 	}
+	const explicitProfileRouteIds = new Set<string>();
 	if (local.profiles !== undefined) {
 		const localProfiles = object(local.profiles, 'localPolicy.profiles');
 		for (const [profileId, rawOverride] of Object.entries(localProfiles)) {
@@ -93,6 +94,7 @@ export function mergeLocalPolicy(
 					throw new ModelUsageError('ERR_LIMIT_ESCALATION_FORBIDDEN', 'Local policy adds profile route');
 				}
 				result.profiles[profileId].routeIds = ids;
+				explicitProfileRouteIds.add(profileId);
 			}
 			if (override.limits !== undefined) {
 				const overrideLimits = object(override.limits, `localPolicy.profiles.${profileId}.limits`);
@@ -202,6 +204,27 @@ export function mergeLocalPolicy(
 				for (const [key, value] of Object.entries(overrideLimits)) {
 					const k = key as keyof RouteLimits;
 					target.limits[k] = ensureLower(value, parent.limits[k], `routes.${parent.id}.${key}`);
+				}
+			}
+		}
+		const orderedIds: string[] = [];
+		for (const rawOverride of local.routes) {
+			const id = (rawOverride as { id: string }).id;
+			if (!orderedIds.includes(id)) orderedIds.push(id);
+		}
+		if (orderedIds.length > 1) {
+			const orderedSet = new Set(orderedIds);
+			const orderedRoutes = orderedIds.map((id) => result.routes.find((r) => r.id === id)!);
+			let nextIdx = 0;
+			result.routes = result.routes.map((r) =>
+				orderedSet.has(r.id) ? orderedRoutes[nextIdx++]! : r,
+			);
+			const routeRank = new Map(result.routes.map((r, index) => [r.id, index]));
+			for (const [profileId, profile] of Object.entries(result.profiles)) {
+				if (!explicitProfileRouteIds.has(profileId)) {
+					profile.routeIds = [...profile.routeIds].sort(
+						(a, b) => (routeRank.get(a) ?? 0) - (routeRank.get(b) ?? 0),
+					);
 				}
 			}
 		}

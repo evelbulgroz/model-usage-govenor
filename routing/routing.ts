@@ -119,7 +119,7 @@ export function selectRoutes(
 	}
 
 	// Step 4: Deterministic Ordering & Effective Strategy Determination
-	const policyRank = new Map(policy.routes.map((route, index) => [route.id, index]));
+	const policyRank = new Map(profile.routeIds.map((routeId, index) => [routeId, index]));
 	const preferred = routingConstraints?.preferredRouteIds ?? [];
 	const preferredRank = new Map(preferred.map((routeId, index) => [routeId, index]));
 
