@@ -1,0 +1,69 @@
+{
+  "name": "@evelbulgroz/model-usage-govenor",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "files": [
+    "dist",
+    "policy/default-policy.json",
+    "testing/test-support.mjs",
+    "PROVIDER-CAPABILITIES.md"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evelbulgroz/model-usage-govenor.git"
+  },
+  "scripts": {
+    "build": "node -e \"const fs=require('node:fs');fs.rmSync('dist',{recursive:true,force:true});\" && tsc -p tsconfig.build.json && node -e \"const fs=require('node:fs');fs.mkdirSync('dist/policy',{recursive:true});fs.copyFileSync('policy/default-policy.json','dist/policy/default-policy.json');\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "pnpm run test:unit",
+    "test:unit": "node --test '**/*.spec.mjs'",
+    "audit:pricing": "node ./scripts/audit-pricing.ts --check"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/governor.d.ts",
+      "default": "./dist/governor.js"
+    },
+    "./atomic-file-state": {
+      "types": "./dist/atomic-file-state.d.ts",
+      "default": "./dist/atomic-file-state.js"
+    },
+    "./sanitize-failure-text": {
+      "types": "./dist/sanitize-failure-text.d.ts",
+      "default": "./dist/sanitize-failure-text.js"
+    },
+    "./errors": {
+      "types": "./dist/policy/errors.d.ts",
+      "default": "./dist/policy/errors.js"
+    },
+    "./ledger": {
+      "types": "./dist/ledger/ledger.d.ts",
+      "default": "./dist/ledger/ledger.js"
+    },
+    "./policy": {
+      "types": "./dist/policy/policy.d.ts",
+      "default": "./dist/policy/policy.js"
+    },
+    "./routing": {
+      "types": "./dist/routing/routing.d.ts",
+      "default": "./dist/routing/routing.js"
+    },
+    "./tokenizer": {
+      "types": "./dist/routing/tokenizer.d.ts",
+      "default": "./dist/routing/tokenizer.js"
+    },
+    "./test-support": "./testing/test-support.mjs",
+    "./adapters/fake": {
+      "types": "./dist/adapters/fake.d.ts",
+      "default": "./dist/adapters/fake.js"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "typescript": "5.9.3"
+  }
+}

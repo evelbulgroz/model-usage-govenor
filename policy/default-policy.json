@@ -1,0 +1,408 @@
+{
+  "schemaVersion": "1.0.0",
+  "pricingVersion": "2026-10-16",
+  "instance": {
+    "maxTotalTokens": 80000000,
+    "maxPhysicalCalls": 1250,
+    "maxCostMicrousd": 50000000,
+    "maxPremiumRequestUnits": 1250,
+    "maxConcurrentReservations": 1
+  },
+  "profiles": {
+    "agent-sdlc-default": {
+      "consumer": "agent-sdlc",
+      "routeIds": [
+        "fake-governed",
+        "openai-compatible-quality",
+        "xai-grok-quality",
+        "anthropic-claude-quality",
+        "google-gemini-quality"
+      ],
+      "limits": {
+        "maxPromptTokens": 968000,
+        "maxCompletionTokens": 16000,
+        "maxTotalTokens": 3936000,
+        "maxPhysicalAttempts": 4,
+        "maxRetriesPerRoute": 2,
+        "maxFailovers": 2,
+        "maxConcurrentOperations": 1,
+        "operationTimeoutMs": 180000,
+        "runTimeoutMs": 28800000,
+        "runMaxTotalTokens": 80000000,
+        "runMaxPhysicalCalls": 1250,
+        "runMaxCostMicrousd": 50000000,
+        "runMaxPremiumRequestUnits": 1250
+      }
+    },
+    "critic-review": {
+      "consumer": "agent-sdlc",
+      "routeIds": [
+        "fake-governed",
+        "openai-compatible-quality",
+        "xai-grok-quality",
+        "anthropic-claude-quality",
+        "google-gemini-quality"
+      ],
+      "limits": {
+        "maxPromptTokens": 20000,
+        "maxCompletionTokens": 16000,
+        "maxTotalTokens": 108000,
+        "maxPhysicalAttempts": 3,
+        "maxRetriesPerRoute": 2,
+        "maxFailovers": 2,
+        "maxConcurrentOperations": 1,
+        "operationTimeoutMs": 180000,
+        "runTimeoutMs": 7200000,
+        "runMaxTotalTokens": 1000000,
+        "runMaxPhysicalCalls": 250,
+        "runMaxCostMicrousd": 25000000,
+        "runMaxPremiumRequestUnits": 250
+      }
+    },
+    "trace-attribution": {
+      "consumer": "agent-sdlc",
+      "routeIds": [
+        "fake-governed",
+        "openai-compatible-quality",
+        "xai-grok-quality",
+        "anthropic-claude-quality",
+        "google-gemini-quality"
+      ],
+      "limits": {
+        "maxPromptTokens": 12000,
+        "maxCompletionTokens": 4000,
+        "maxTotalTokens": 48000,
+        "maxPhysicalAttempts": 3,
+        "maxRetriesPerRoute": 2,
+        "maxFailovers": 1,
+        "maxConcurrentOperations": 1,
+        "operationTimeoutMs": 180000,
+        "runTimeoutMs": 7200000,
+        "runMaxTotalTokens": 750000,
+        "runMaxPhysicalCalls": 250,
+        "runMaxCostMicrousd": 10000000,
+        "runMaxPremiumRequestUnits": 250
+      }
+    }
+  },
+  "routes": [
+    {
+      "id": "fake-governed",
+      "provider": "fake",
+      "model": "deterministic-json",
+      "canonicalVendor": "fake",
+      "classification": "test-only",
+      "qualityTier": 1,
+      "enabled": false,
+      "metered": false,
+      "capabilities": ["structured-output", "usage"],
+      "credentialEnv": null,
+      "baseUrl": null,
+      "requestUnitName": "request",
+      "premiumRequestUnits": 0,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 20000,
+        "maxCompletionTokens": 6000,
+        "maxTotalTokens": 26000,
+        "maxPhysicalCalls": 500,
+        "maxCostMicrousd": 25000000,
+        "maxPremiumRequestUnits": 500,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 0,
+        "outputMicrousdPerMillionTokens": 0,
+        "fixedRequestMicrousd": 0
+      }
+    },
+    {
+      "id": "openai-compatible-conservative",
+      "provider": "openai-compatible",
+      "model": "gpt-4o-mini",
+      "canonicalVendor": "openai",
+      "classification": "governed-conservative",
+      "qualityTier": 1,
+      "enabled": true,
+      "metered": true,
+      "capabilities": ["structured-output", "usage", "abort", "request-id"],
+      "credentialEnv": "OPENAI_API_KEY",
+      "baseUrl": "https://api.openai.com/v1",
+      "requestUnitName": "request",
+      "premiumRequestUnits": 1,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 12000,
+        "maxCompletionTokens": 4000,
+        "maxTotalTokens": 16000,
+        "maxPhysicalCalls": 500,
+        "maxCostMicrousd": 25000000,
+        "maxPremiumRequestUnits": 500,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 150000,
+        "outputMicrousdPerMillionTokens": 600000,
+        "fixedRequestMicrousd": 0,
+        "effectiveDate": "2026-09-11",
+        "citationUrl": "https://platform.openai.com/docs/pricing"
+      }
+    },
+    {
+      "id": "xai-grok-conservative",
+      "provider": "xai",
+      "model": "grok-4.20-0309-non-reasoning",
+      "canonicalVendor": "xai",
+      "classification": "governed-conservative",
+      "qualityTier": 2,
+      "enabled": true,
+      "metered": true,
+      "capabilities": ["structured-output", "usage", "abort", "request-id"],
+      "credentialEnv": "XAI_API_KEY",
+      "baseUrl": "https://api.x.ai/v1",
+      "requestUnitName": "request",
+      "premiumRequestUnits": 1,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 12000,
+        "maxCompletionTokens": 4000,
+        "maxTotalTokens": 16000,
+        "maxPhysicalCalls": 500,
+        "maxCostMicrousd": 25000000,
+        "maxPremiumRequestUnits": 500,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 1250000,
+        "outputMicrousdPerMillionTokens": 2500000,
+        "cacheReadMicrousdPerMillionTokens": 200000,
+        "fixedRequestMicrousd": 0,
+        "effectiveDate": "2026-10-16",
+        "citationUrl": "https://docs.x.ai/developers/pricing"
+      }
+    },
+    {
+      "id": "google-gemini-conservative",
+      "provider": "google",
+      "model": "gemini-3.6-flash",
+      "canonicalVendor": "google",
+      "classification": "governed-conservative",
+      "qualityTier": 2,
+      "enabled": true,
+      "metered": true,
+      "capabilities": ["structured-output", "usage", "abort", "request-id", "reasoning"],
+      "reasoning": { "effort": "minimal" },
+      "credentialEnv": "GOOGLE_API_KEY",
+      "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+      "requestUnitName": "request",
+      "premiumRequestUnits": 1,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 12000,
+        "maxCompletionTokens": 4000,
+        "maxTotalTokens": 16000,
+        "maxPhysicalCalls": 500,
+        "maxCostMicrousd": 25000000,
+        "maxPremiumRequestUnits": 500,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 750000,
+        "outputMicrousdPerMillionTokens": 3750000,
+        "cacheReadMicrousdPerMillionTokens": 75000,
+        "fixedRequestMicrousd": 0,
+        "effectiveDate": "2026-10-16",
+        "citationUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "id": "openai-compatible-quality",
+      "provider": "openai-compatible",
+      "model": "gpt-6.1-sol",
+      "canonicalVendor": "openai",
+      "classification": "governed",
+      "qualityTier": 3,
+      "enabled": true,
+      "metered": true,
+      "capabilities": ["structured-output", "usage", "abort", "request-id", "reasoning"],
+      "reasoning": { "effort": "low" },
+      "credentialEnv": "OPENAI_API_KEY",
+      "baseUrl": "https://api.openai.com/v1",
+      "requestUnitName": "request",
+      "premiumRequestUnits": 1,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 922000,
+        "maxCompletionTokens": 16000,
+        "maxTotalTokens": 938000,
+        "maxPhysicalCalls": 500,
+        "maxCostMicrousd": 25000000,
+        "maxPremiumRequestUnits": 500,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 2000000,
+        "outputMicrousdPerMillionTokens": 10000000,
+        "cacheReadMicrousdPerMillionTokens": 100000,
+        "cacheWrite5mMicrousdPerMillionTokens": 2500000,
+        "fixedRequestMicrousd": 0,
+        "effectiveDate": "2026-10-16",
+        "citationUrl": "https://developers.openai.com/api/docs/pricing"
+      }
+    },
+    {
+      "id": "xai-grok-quality",
+      "provider": "xai",
+      "model": "grok-4.7",
+      "canonicalVendor": "xai",
+      "classification": "governed",
+      "qualityTier": 3,
+      "enabled": true,
+      "metered": true,
+      "capabilities": ["structured-output", "usage", "abort", "request-id", "reasoning"],
+      "reasoning": { "effort": "low" },
+      "credentialEnv": "XAI_API_KEY",
+      "baseUrl": "https://api.x.ai/v1",
+      "requestUnitName": "request",
+      "premiumRequestUnits": 1,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 484000,
+        "maxCompletionTokens": 16000,
+        "maxTotalTokens": 500000,
+        "maxPhysicalCalls": 500,
+        "maxCostMicrousd": 50000000,
+        "maxPremiumRequestUnits": 500,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 2000000,
+        "outputMicrousdPerMillionTokens": 6000000,
+        "cacheReadMicrousdPerMillionTokens": 500000,
+        "fixedRequestMicrousd": 0,
+        "effectiveDate": "2026-10-16",
+        "citationUrl": "https://docs.x.ai/developers/pricing"
+      }
+    },
+    {
+      "id": "anthropic-claude-quality",
+      "provider": "anthropic",
+      "model": "claude-sonnet-5-5",
+      "canonicalVendor": "anthropic",
+      "classification": "governed",
+      "qualityTier": 3,
+      "enabled": true,
+      "metered": true,
+      "capabilities": ["structured-output", "usage", "abort", "request-id"],
+      "credentialEnv": "ANTHROPIC_API_KEY",
+      "baseUrl": "https://api.anthropic.com/v1",
+      "requestUnitName": "request",
+      "premiumRequestUnits": 1,
+      "premiumRequestUnits": 1,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 968000,
+        "maxCompletionTokens": 16000,
+        "maxTotalTokens": 984000,
+        "maxPhysicalCalls": 750,
+        "maxCostMicrousd": 25000000,
+        "maxPremiumRequestUnits": 750,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 2000000,
+        "outputMicrousdPerMillionTokens": 10000000,
+        "cacheReadMicrousdPerMillionTokens": 100000,
+        "cacheWrite5mMicrousdPerMillionTokens": 2500000,
+        "fixedRequestMicrousd": 0,
+        "effectiveDate": "2026-10-16",
+        "citationUrl": "https://platform.claude.com/docs/en/models/sonnet-5-5/overview"
+      }
+    },
+    {
+      "id": "google-gemini-quality",
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "canonicalVendor": "google",
+      "classification": "governed",
+      "qualityTier": 3,
+      "enabled": true,
+      "metered": true,
+      "capabilities": ["structured-output", "usage", "abort", "request-id", "reasoning"],
+      "reasoning": { "effort": "medium" },
+      "credentialEnv": "GOOGLE_API_KEY",
+      "baseUrl": "https://generativelanguage.googleapis.com/v1beta",
+      "requestUnitName": "request",
+      "premiumRequestUnits": 1,
+      "framing": "Return only JSON matching the supplied schema.\n",
+      "limits": {
+        "maxPromptTokens": 968000,
+        "maxCompletionTokens": 16000,
+        "maxTotalTokens": 984000,
+        "maxPhysicalCalls": 750,
+        "maxCostMicrousd": 25000000,
+        "maxPremiumRequestUnits": 750,
+        "maxConcurrentReservations": 1,
+        "attemptTimeoutMs": 180000
+      },
+      "pricing": {
+        "status": "known",
+        "inputMicrousdPerMillionTokens": 2000000,
+        "outputMicrousdPerMillionTokens": 12000000,
+        "cacheReadMicrousdPerMillionTokens": 200000,
+        "fixedRequestMicrousd": 0,
+        "effectiveDate": "2026-10-16",
+        "citationUrl": "https://ai.google.dev/gemini-api/docs/pricing"
+      }
+    },
+    {
+      "id": "copilot-external",
+      "provider": "copilot",
+      "model": "hosted",
+      "canonicalVendor": "github",
+      "classification": "external-best-effort",
+      "qualityTier": 1,
+      "enabled": false,
+      "metered": false,
+      "capabilities": [],
+      "credentialEnv": null,
+      "baseUrl": null,
+      "requestUnitName": "premium-request",
+      "premiumRequestUnits": 1,
+      "framing": "",
+      "limits": {
+        "maxPromptTokens": 0,
+        "maxCompletionTokens": 0,
+        "maxTotalTokens": 0,
+        "maxPhysicalCalls": 0,
+        "maxCostMicrousd": 0,
+        "maxPremiumRequestUnits": 0,
+        "maxConcurrentReservations": 0,
+        "attemptTimeoutMs": 0
+      },
+      "pricing": {
+        "status": "unknown"
+      }
+    }
+  ],
+  "retryableOutcomes": ["timeout", "transport", "http_5xx", "malformed_output"],
+  "providerBoundary": {
+    "registeredConsumerRoots": ["packages/agent-sdlc"],
+    "allowedAdapterRoots": ["packages/model-usage/adapters"],
+    "allowedSetupFiles": []
+  }
+}
