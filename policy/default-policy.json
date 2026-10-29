@@ -14,9 +14,9 @@
       "routeIds": [
         "fake-governed",
         "openai-compatible-quality",
-        "xai-grok-quality",
         "anthropic-claude-quality",
-        "google-gemini-quality"
+        "google-gemini-quality",
+        "xai-grok-quality"
       ],
       "limits": {
         "maxPromptTokens": 968000,
@@ -38,8 +38,8 @@
       "consumer": "agent-sdlc",
       "routeIds": [
         "fake-governed",
-        "openai-compatible-quality",
         "xai-grok-quality",
+        "openai-compatible-quality",
         "anthropic-claude-quality",
         "google-gemini-quality"
       ],
@@ -64,9 +64,9 @@
       "routeIds": [
         "fake-governed",
         "openai-compatible-quality",
-        "xai-grok-quality",
         "anthropic-claude-quality",
-        "google-gemini-quality"
+        "google-gemini-quality",
+        "xai-grok-quality"
       ],
       "limits": {
         "maxPromptTokens": 12000,

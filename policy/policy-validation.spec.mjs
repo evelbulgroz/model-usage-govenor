@@ -102,12 +102,19 @@ test('validates the committed closed policy and rejects unknown keys', () => {
 	const qualityRouteIds = [
 		'fake-governed',
 		'openai-compatible-quality',
+		'anthropic-claude-quality',
+		'google-gemini-quality',
 		'xai-grok-quality',
+	];
+	const criticRouteIds = [
+		'fake-governed',
+		'xai-grok-quality',
+		'openai-compatible-quality',
 		'anthropic-claude-quality',
 		'google-gemini-quality',
 	];
 	assert.deepEqual(validated.profiles['agent-sdlc-default'].routeIds, qualityRouteIds);
-	assert.deepEqual(validated.profiles['critic-review'].routeIds, qualityRouteIds);
+	assert.deepEqual(validated.profiles['critic-review'].routeIds, criticRouteIds);
 	assert.deepEqual(validated.profiles['trace-attribution'].routeIds, qualityRouteIds);
 	assert.deepEqual(validated.retryableOutcomes, [
 		'timeout',
