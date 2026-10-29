@@ -60,7 +60,7 @@ test('@ac AC-01 @case AC-01.1 packages/model-usage root contains only allowliste
 
 test('@ac AC-03 @case AC-03.1 package.json declares build, typecheck, test:unit, audit:pricing, publishConfig, and conditional dist exports', async () => {
 	const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8'));
-	assert.equal(pkg.version, '1.0.0');
+	assert.equal(pkg.version, '1.1.0');
 	assert.equal(pkg.private, false);
 	assert.deepEqual(pkg.publishConfig, { registry: 'https://npm.pkg.github.com/' });
 	assert.deepEqual(pkg.files, [
