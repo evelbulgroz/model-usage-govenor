@@ -44,9 +44,9 @@
         "google-gemini-quality"
       ],
       "limits": {
-        "maxPromptTokens": 20000,
+        "maxPromptTokens": 32000,
         "maxCompletionTokens": 16000,
-        "maxTotalTokens": 108000,
+        "maxTotalTokens": 144000,
         "maxPhysicalAttempts": 3,
         "maxRetriesPerRoute": 2,
         "maxFailovers": 2,

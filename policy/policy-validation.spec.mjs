@@ -96,7 +96,8 @@ test('validates the committed closed policy and rejects unknown keys', () => {
 		runMaxPremiumRequestUnits: 1250,
 	});
 	assert.equal(validated.profiles['critic-review'].limits.maxCompletionTokens, 16000);
-	assert.equal(validated.profiles['critic-review'].limits.maxTotalTokens, 108000);
+	assert.equal(validated.profiles['critic-review'].limits.maxPromptTokens, 32000);
+	assert.equal(validated.profiles['critic-review'].limits.maxTotalTokens, 144000);
 	assert.equal(validated.profiles['critic-review'].limits.runTimeoutMs, 7200000);
 	assert.equal(validated.profiles['trace-attribution'].limits.runTimeoutMs, 7200000);
 	const qualityRouteIds = [
