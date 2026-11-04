@@ -88,7 +88,7 @@ test('validates the committed closed policy and rejects unknown keys', () => {
 		maxRetriesPerRoute: 2,
 		maxFailovers: 2,
 		maxConcurrentOperations: 1,
-		operationTimeoutMs: 180000,
+		operationTimeoutMs: 600000,
 		runTimeoutMs: 28800000,
 		runMaxTotalTokens: 80000000,
 		runMaxPhysicalCalls: 1250,
