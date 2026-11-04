@@ -101,8 +101,8 @@ const OUTCOMES = new Set([
 export const BUILTIN_SAFETY = Object.freeze({
 	maxPromptTokens: 1_000_000,
 	maxCompletionTokens: 1_000_000,
-	// Four reservations of the implementer ceiling: 968000 prompt plus 16000 completion.
-	maxTotalTokens: 3_936_000,
+	// Four reservations of the implementer ceiling: 968000 prompt plus 48000 completion.
+	maxTotalTokens: 4_064_000,
 	maxPhysicalAttempts: 10,
 	maxRetriesPerRoute: 9,
 	maxFailovers: 5,

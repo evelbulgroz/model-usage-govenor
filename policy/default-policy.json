@@ -20,13 +20,13 @@
       ],
       "limits": {
         "maxPromptTokens": 968000,
-        "maxCompletionTokens": 16000,
-        "maxTotalTokens": 3936000,
+        "maxCompletionTokens": 48000,
+        "maxTotalTokens": 4064000,
         "maxPhysicalAttempts": 4,
         "maxRetriesPerRoute": 2,
         "maxFailovers": 2,
         "maxConcurrentOperations": 1,
-        "operationTimeoutMs": 180000,
+        "operationTimeoutMs": 600000,
         "runTimeoutMs": 28800000,
         "runMaxTotalTokens": 80000000,
         "runMaxPhysicalCalls": 1250,
@@ -241,13 +241,13 @@
       "framing": "Return only JSON matching the supplied schema.\n",
       "limits": {
         "maxPromptTokens": 922000,
-        "maxCompletionTokens": 16000,
-        "maxTotalTokens": 938000,
+        "maxCompletionTokens": 48000,
+        "maxTotalTokens": 970000,
         "maxPhysicalCalls": 500,
         "maxCostMicrousd": 25000000,
         "maxPremiumRequestUnits": 500,
         "maxConcurrentReservations": 1,
-        "attemptTimeoutMs": 180000
+        "attemptTimeoutMs": 600000
       },
       "pricing": {
         "status": "known",
@@ -278,13 +278,13 @@
       "framing": "Return only JSON matching the supplied schema.\n",
       "limits": {
         "maxPromptTokens": 484000,
-        "maxCompletionTokens": 16000,
-        "maxTotalTokens": 500000,
+        "maxCompletionTokens": 48000,
+        "maxTotalTokens": 532000,
         "maxPhysicalCalls": 500,
         "maxCostMicrousd": 50000000,
         "maxPremiumRequestUnits": 500,
         "maxConcurrentReservations": 1,
-        "attemptTimeoutMs": 180000
+        "attemptTimeoutMs": 600000
       },
       "pricing": {
         "status": "known",
@@ -314,13 +314,13 @@
       "framing": "Return only JSON matching the supplied schema.\n",
       "limits": {
         "maxPromptTokens": 968000,
-        "maxCompletionTokens": 16000,
-        "maxTotalTokens": 984000,
+        "maxCompletionTokens": 48000,
+        "maxTotalTokens": 1016000,
         "maxPhysicalCalls": 750,
         "maxCostMicrousd": 25000000,
         "maxPremiumRequestUnits": 750,
         "maxConcurrentReservations": 1,
-        "attemptTimeoutMs": 180000
+        "attemptTimeoutMs": 600000
       },
       "pricing": {
         "status": "known",
@@ -351,13 +351,13 @@
       "framing": "Return only JSON matching the supplied schema.\n",
       "limits": {
         "maxPromptTokens": 968000,
-        "maxCompletionTokens": 16000,
-        "maxTotalTokens": 984000,
+        "maxCompletionTokens": 48000,
+        "maxTotalTokens": 1016000,
         "maxPhysicalCalls": 750,
         "maxCostMicrousd": 25000000,
         "maxPremiumRequestUnits": 750,
         "maxConcurrentReservations": 1,
-        "attemptTimeoutMs": 180000
+        "attemptTimeoutMs": 600000
       },
       "pricing": {
         "status": "known",

@@ -26,8 +26,8 @@ test('validates the committed closed policy and rejects unknown keys', () => {
 	assert.equal(geminiQuality.pricing.cacheWrite5mMicrousdPerMillionTokens, undefined);
 	assert.equal(geminiQuality.pricing.effectiveDate, '2026-10-16');
 	assert.equal(geminiQuality.limits.maxPromptTokens, 968000);
-	assert.equal(geminiQuality.limits.maxCompletionTokens, 16000);
-	assert.equal(geminiQuality.limits.maxTotalTokens, 984000);
+	assert.equal(geminiQuality.limits.maxCompletionTokens, 48000);
+	assert.equal(geminiQuality.limits.maxTotalTokens, 1016000);
 	assert.equal(geminiQuality.limits.maxPhysicalCalls, 750);
 	assert.equal(geminiQuality.limits.maxPremiumRequestUnits, 750);
 	const openai = validated.routes.find((route) => route.id === 'openai-compatible-conservative');
@@ -45,8 +45,8 @@ test('validates the committed closed policy and rejects unknown keys', () => {
 	assert.equal(openaiQuality.pricing.cacheWrite5mMicrousdPerMillionTokens, 2500000);
 	assert.equal(openaiQuality.pricing.effectiveDate, '2026-10-16');
 	assert.equal(openaiQuality.limits.maxPromptTokens, 922000);
-	assert.equal(openaiQuality.limits.maxCompletionTokens, 16000);
-	assert.equal(openaiQuality.limits.maxTotalTokens, 938000);
+	assert.equal(openaiQuality.limits.maxCompletionTokens, 48000);
+	assert.equal(openaiQuality.limits.maxTotalTokens, 970000);
 	const xai = validated.routes.find((route) => route.id === 'xai-grok-conservative');
 	assert.equal(xai.model, 'grok-4.20-0309-non-reasoning');
 	assert.equal(xai.enabled, true);
@@ -66,8 +66,8 @@ test('validates the committed closed policy and rejects unknown keys', () => {
 	assert.equal(xaiQuality.pricing.effectiveDate, '2026-10-16');
 	assert.equal(xaiQuality.pricing.citationUrl, 'https://docs.x.ai/developers/pricing');
 	assert.equal(xaiQuality.limits.maxPromptTokens, 484000);
-	assert.equal(xaiQuality.limits.maxCompletionTokens, 16000);
-	assert.equal(xaiQuality.limits.maxTotalTokens, 500000);
+	assert.equal(xaiQuality.limits.maxCompletionTokens, 48000);
+	assert.equal(xaiQuality.limits.maxTotalTokens, 532000);
 	assert.equal(xaiQuality.limits.maxCostMicrousd, 50000000);
 	const anthropic = validated.routes.find((route) => route.id === 'anthropic-claude-quality');
 	assert.equal(anthropic.model, 'claude-sonnet-5-5');
@@ -79,11 +79,11 @@ test('validates the committed closed policy and rejects unknown keys', () => {
 	assert.equal(anthropic.pricing.cacheWrite5mMicrousdPerMillionTokens, 2500000);
 	assert.equal(anthropic.pricing.effectiveDate, '2026-10-16');
 	assert.equal(anthropic.limits.maxPromptTokens, 968000);
-	assert.equal(anthropic.limits.maxTotalTokens, 984000);
+	assert.equal(anthropic.limits.maxTotalTokens, 1016000);
 	assert.deepEqual(validated.profiles['agent-sdlc-default'].limits, {
 		maxPromptTokens: 968000,
-		maxCompletionTokens: 16000,
-		maxTotalTokens: 3936000,
+		maxCompletionTokens: 48000,
+		maxTotalTokens: 4064000,
 		maxPhysicalAttempts: 4,
 		maxRetriesPerRoute: 2,
 		maxFailovers: 2,
